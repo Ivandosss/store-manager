@@ -1,20 +1,53 @@
 const status = require('http-status-codes').StatusCodes;
-const { productCreate } = require('../services/productsService');
+const { productCreate, searchAll, productById } = require('../services/productsService');
+
+const ERROR_FORMAT = {
+  err: {
+  code: 'invalid_data',
+  message: 'Wrong id format',
+  },
+  };
+
+const message = { message: 'NOT FOUND' };
 
 const productInsert = async (req, res) => {
   const { body } = req;
   let product;
-  const message = { message: 'NOT FOUND' };
   try {
     product = await productCreate(body);
   } catch (error) {
-    return res.staus(status.BAD_REQUEST).json({ message: error.message });
+    return res.status(status.BAD_REQUEST).json({ message: error.message });
   }
   return product 
   ? res.status(status.CREATED).json(product)
   : res.status(status.NOT_FOUND).json(message); 
 };
 
+const getAll = async (req, res) => {
+  let products;
+  try {
+    products = await searchAll();
+  } catch (error) {
+    return res.status(status.UNPROCESSABLE_ENTITY).json(ERROR_FORMAT);
+  }
+  return products ? res.status(status.OK).json(products)
+  : res.status(status.UNPROCESSABLE_ENTITY).json(message);
+};
+
+const getById = async (req, res) => {
+  const { id } = req.params;
+  let product;
+  try {
+    product = await productById(id);
+  } catch (error) {
+    return res.status(status.UNPROCESSABLE_ENTITY).json(ERROR_FORMAT);
+  }
+  return product ? res.status(status.OK).json(product)
+  : res.status(status.UNPROCESSABLE_ENTITY).json(message);
+};
+
 module.exports = {
   productInsert,
+  getAll,
+  getById,
 };
