@@ -2,7 +2,8 @@ const status = require('http-status-codes').StatusCodes;
 const { createdSaleService, 
   getAllSaleService, 
   getSaleByIdService,
-  setSaleByIdService, 
+  setSaleByIdService,
+  deleteSaleByIdService, 
 } = require('../services/createSaleService');
 
 const ERROR_FORMAT = {
@@ -67,9 +68,24 @@ const updateSaleController = async (req, res) => {
   : res.status(status.UNPROCESSABLE_ENTITY).json(message);
 };
 
+const deleteSaleController = async (req, res) => {
+  const { id } = req.params;
+  let sale;
+  try {
+    sale = await deleteSaleByIdService(id);
+  } catch (error) {
+    return res.status(status.UNPROCESSABLE_ENTITY).json(ERROR_FORMAT);
+  }
+
+  return sale
+  ? res.status(status.OK).json(sale[0])
+  : res.status(status.UNPROCESSABLE_ENTITY).json(message);
+};
+
 module.exports = {
   createSaleController,
   getAllSaleController,
   getByIdController,
-  updateSaleController, 
+  updateSaleController,
+  deleteSaleController, 
 };

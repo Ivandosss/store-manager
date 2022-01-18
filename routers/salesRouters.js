@@ -3,12 +3,13 @@ const router = require('express').Router();
 const { createSaleController, 
   getByIdController, 
   updateSaleController,
+  deleteSaleController,
 } = require('../controllers/salesControllers');
 const { 
   checkTypeSale, 
   checkLengthSale, 
 } = require('../middleware/checkSalesMiddlewares');
-const { checkSaleById } = require('../middleware/existsSaleMiddlewares');
+const { checkSaleById, checkIdFormat } = require('../middleware/existsSaleMiddlewares');
 const { getSalesModels } = require('../models/createdSaleModel');
 
 router.post(
@@ -39,5 +40,7 @@ router.get(
 
 router.delete(
   '/:id',
+  checkIdFormat,
+  deleteSaleController,
 );
 module.exports = router;

@@ -1,7 +1,8 @@
 const { createSaleModel, 
   getSalesModels, 
   getSaleByIdModels,
-  setByIdModel, 
+  setByIdModel,
+  deleteSaleByIdModels, 
 } = require('../models/createdSaleModel');
 
 const createdSaleService = async (body) => {
@@ -28,9 +29,15 @@ const setSaleByIdService = async (id, sale) => {
   return set ? allSales : null;
 };
 
+const deleteSaleByIdService = async (id) => {
+  const get = await deleteSaleByIdModels(id);
+  return get || null;
+};
+
 module.exports = {
   createdSaleService,
   getAllSaleService,
   getSaleByIdService,
   setSaleByIdService,
+  deleteSaleByIdService,
 };
