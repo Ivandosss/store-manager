@@ -4,8 +4,7 @@ const connection = require('./connection');
 const createSaleModel = async (itensSold) => {
   try {
     const db = await connection();
-    const insert = await db
-    .collection('sales')
+    const insert = await db.collection('sales')
     .insertOne(
       { itensSold },
       );
@@ -37,7 +36,6 @@ const getSaleByIdModels = async (id) => {
   try {
     const db = await connection();
     const sale = await db.collection('sales').findOne({ _id: ObjectId(id) });
-
     return sale || null;
   } catch (err) {
     return err.message;
