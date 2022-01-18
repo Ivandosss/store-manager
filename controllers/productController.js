@@ -12,7 +12,7 @@ const ERROR_FORMAT = {
   code: 'invalid_data',
   message: 'Wrong id format',
   },
-  };
+};
 
 const message = { message: 'NOT FOUND' };
 

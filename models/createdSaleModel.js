@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
 const createSaleModel = async (itensSold) => {
@@ -22,6 +23,44 @@ const createSaleModel = async (itensSold) => {
   }
 };
 
+const getSalesModels = async () => {
+  try {
+    const db = await connection();
+    const sales = await db.collection('sales').find({}).toArray();
+    return sales || null;
+  } catch (err) {
+    return err.message;
+  }
+};
+
+const getSaleByIdModels = async (id) => {
+  try {
+    const db = await connection();
+    const sale = await db.collection('sales').findOne({ _id: ObjectId(id) });
+
+    return sale || null;
+  } catch (err) {
+    return err.message;
+  }
+};
+
+const setByIdModel = async (id, sale) => {
+  try {
+    const db = await connection();
+    const set = await db.collection('sales')
+    .updateOne(
+      { _id: ObjectId(id) },
+      { $set: { itensSold: sale } },
+      );
+    return set || null;
+  } catch (err) {
+    return err.message;
+  }
+};
+
 module.exports = {
   createSaleModel,
+  getSalesModels,
+  getSaleByIdModels,
+  setByIdModel,
 };
