@@ -32,6 +32,7 @@ const getAllSaleController = async (_req, res) => {
   let sales;
   try {
     sales = await getAllSaleService();
+    console.log(`GET ALL, ${sales}`);
   } catch (error) {
     return res.status(status.UNPROCESSABLE_ENTITY).json(ERROR_FORMAT);
   }

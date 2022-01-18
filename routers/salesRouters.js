@@ -4,13 +4,13 @@ const { createSaleController,
   getByIdController, 
   updateSaleController,
   deleteSaleController,
+  getAllSaleController,
 } = require('../controllers/salesControllers');
 const { 
   checkTypeSale, 
   checkLengthSale, 
 } = require('../middleware/checkSalesMiddlewares');
 const { checkSaleById, checkIdFormat } = require('../middleware/existsSaleMiddlewares');
-const { getSalesModels } = require('../models/createdSaleModel');
 
 router.post(
   '/',
@@ -28,7 +28,7 @@ router.put(
 
 router.get(
   '/',
-  getSalesModels,
+  getAllSaleController,
 );
 
 router.get(

@@ -60,8 +60,6 @@ const deleteSaleByIdModels = async (id) => {
   try {
     const db = await connection();
 
-    // const set = await getById(id);
-
     const set = await db.collection('sales')
     .deleteOne(
       { _id: ObjectId(id) },
