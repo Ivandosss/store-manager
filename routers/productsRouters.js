@@ -1,12 +1,12 @@
 const router = require('express').Router();
 
-const { productInsert, getAll, getById } = require('../controllers/productController');
+const { productInsert, getAll, getById, setProduct } = require('../controllers/productController');
 const { 
   checkName, 
   checkNameExists, 
   checkProductById, 
-} = require('../middlewares/productmiddleware');
-const { checkLength, checkType } = require('../middlewares/productsQty');
+} = require('../middleware/productMiddleware');
+const { checkLength, checkType } = require('../middleware/productsQty');
 
 router.post(
   '/',
@@ -26,6 +26,14 @@ router.get(
   '/:id',
   checkProductById,
   getById,
+);
+
+router.put(
+  '/:id',
+  checkName,
+  checkLength,
+  checkType,
+  setProduct,
 );
 
 module.exports = router;
