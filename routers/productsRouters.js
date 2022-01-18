@@ -1,6 +1,12 @@
 const router = require('express').Router();
 
-const { productInsert, getAll, getById, setProduct } = require('../controllers/productController');
+const { 
+  productInsert, 
+  getAll, 
+  getById, 
+  setProduct, 
+  deleteProductController, 
+} = require('../controllers/productController');
 const { 
   checkName, 
   checkNameExists, 
@@ -34,6 +40,12 @@ router.put(
   checkLength,
   checkType,
   setProduct,
+);
+
+router.delete(
+  '/:id',
+  checkProductById,
+  deleteProductController,
 );
 
 module.exports = router;

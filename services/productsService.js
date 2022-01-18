@@ -1,4 +1,9 @@
-const { create, getAllProducts, productId, setProductModel } = require('../models/productModels');
+const { create, 
+  getAllProducts, 
+  productId, 
+  setProductModel, 
+  deleteProductModel, 
+} = require('../models/productModels');
 
 const productCreate = async (body) => {
   const insert = await create(body);
@@ -20,9 +25,15 @@ const updateProduct = async (id, name, quantity) => {
   return updated || null;
 };
 
+const deleteProductService = async (id) => {
+  const get = await deleteProductModel(id);
+  return get || null;
+};
+
 module.exports = {
   productCreate,
   searchAll,
   productById,
   updateProduct,
+  deleteProductService,
 };

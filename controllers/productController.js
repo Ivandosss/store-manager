@@ -3,7 +3,8 @@ const {
   productCreate, 
   searchAll, 
   productById, 
-  updateProduct, 
+  updateProduct,
+  deleteProductService, 
 } = require('../services/productsService');
 
 const ERROR_FORMAT = {
@@ -65,9 +66,23 @@ const setProduct = async (req, res) => {
   : res.status(status.NOT_FOUND).json(message);
 };
 
+const deleteProductController = async (req, res) => {
+  const { id } = req.params;
+  let product;
+  try {
+    product = await deleteProductService(id);
+  } catch (error) {
+    return res.status(status.UNPROCESSABLE_ENTITY).json(ERROR_FORMAT);
+  }
+  return product
+  ? res.status(status.OK).json(product)
+  : res.status(status.UNPROCESSABLE_ENTITY).json(message);
+};
+
 module.exports = {
   productInsert,
   getAll,
   getById,
   setProduct,
+  deleteProductController,
 };

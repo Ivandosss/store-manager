@@ -54,10 +54,28 @@ const setProductModel = async (id, name, quantity) => {
   }
 };
 
+const deleteProductModel = async (id) => {
+  try {
+    const db = await connection();
+    const deleted = await db
+    .collection('products')
+    .findOneAndDelete({
+      _id: ObjectId(id),
+    }, {
+      returnOriginal: 'after',
+    });
+
+    return deleted || null;
+  } catch (err) {
+    return err.message;
+  }
+};
+
 module.exports = {
   create,
   getProductByName,
   getAllProducts,
   productId,
   setProductModel,
+  deleteProductModel,
 };
