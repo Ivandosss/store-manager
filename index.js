@@ -9,8 +9,9 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
-const { productsRouters } = require('./routers');
+const { productsRouters, salesRouters } = require('./routers');
 // Rota de produtos
 app.use('/products', productsRouters);
+app.use('/sales', salesRouters);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
